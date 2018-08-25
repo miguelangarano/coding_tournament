@@ -1,20 +1,21 @@
 import React,{Component} from 'react';
 import {Map, InfoWindow, Marker, GoogleApiWrapper} from 'google-maps-react';
-import axios from 'axios';
+import {Button} from 'reactstrap';
+
 
 export class MapContainer extends Component {
 
     constructor(){
         super();
-        axios.get('http://localhost:5000/api/events')
-            .then(function(response){
-                console.log(response);
-                
-            }).catch(function (error) {
-                // handle error
-                console.log(error);
-            });
+        
         this.onMapClicked=this.onMapClicked.bind(this);
+        this.onMarkerClick=this.onMarkerClick.bind(this);
+    }
+
+    componentDidMount(){
+        this.setState({
+            markers:this.props.markers
+        })
     }
 
     state={
@@ -24,21 +25,29 @@ export class MapContainer extends Component {
         latitude:'-0.1865938',
         longitude:'-78.570625',
         markers:[
-            {id:'1', lat: 25.774, lng: -80.190},
-            {id:'2', lat: 18.466, lng: -66.118},
-            {id:'3', lat: 32.321, lng: -64.757},
-            {id:'4', lat: 25.774, lng: -80.190}
+            
         ]
+        
     }
 
     onMapClicked(mapProps, map, clickEvent){
         this.props.setLatLong(clickEvent.latLng.lat(),clickEvent.latLng.lng());
-        console.log(clickEvent.latLng.lat()+clickEvent.latLng.lng());
+        if (this.state.showingInfoWindow) {
+            this.setState({
+              showingInfoWindow: false,
+              activeMarker: null
+            })
+        }
     }
 
     onMarkerClick(props,marker,e){
-
+        this.setState({
+            selectedPlace: props,
+            activeMarker: marker,
+            showingInfoWindow: true
+          });
     }
+    
 
     
   render() {
@@ -58,18 +67,18 @@ export class MapContainer extends Component {
       onClick={this.onMapClicked}>
       
       
-      {this.state.markers.map(marker => (
+      {this.props.markers.map(marker => (
             <Marker
-                position={{ lat: marker.lat, lng: marker.lng }}
-                key={marker.id}/>
+                position={{ lat: marker.eventLocationLatitude, lng: marker.eventLocationLongitude }}
+                key={marker._id}
+                name={marker.eventDescription}
+                onClick={this.onMarkerClick}/>
         ))}
 
 
-        <Marker onClick={this.onMarkerClick}
-                name={'Current location'}
-                position={{lat: 37.762391, lng: -122.439192}} />
-
-        <InfoWindow onClose={this.onInfoWindowClose}>
+        <InfoWindow
+          marker={this.state.activeMarker}
+          visible={this.state.showingInfoWindow}>
             <div>
               <h1>{this.state.selectedPlace.name}</h1>
             </div>
