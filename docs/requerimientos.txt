@@ -1,0 +1,25 @@
+-Mapa donde se vean todos los eventos
+-Permitir dar click en el mapa para crear o ver un evento
+-Clusterizar(agrupar) dependiendo del nivel de zoom
+-Asignar urls unicas a cada evento para poderlos compartir.....cuando se introduzca ese url nos debe llevar directamente
+ a la posicion del evento y mostrar su descripcion.
+-Debe haber un boton para reportar un evento y mostrar un form para crearlo con los siguientes datos:
+	-Descripcion
+	-Tipo de evento
+	-Fecha y hora del evento(valor por defecto es ahora pero se puede elegir otra fecha y hora
+	-Ubicacion(longitud y latitud del mapa)
+	-Imagen correspondiente al evento
+-Se debe permitir buscar un evento y filtrarlo por tipo de evento y punto el tiempo(o sea todos, hoy, semana pasada,
+ mes pasado, año pasado)
+-Debe haber una barra lateral que muestre los ultimo 10 eventos con la opcion de cargar mas.
+ Si clickeo un evento se debe abrir su descripcion y ubicacion en el mapa.
+
+--------------------------------------------------------------------------------------------------------------------------
+Extras
+--------------------------------------------------------------------------------------------------------------------------
+-Obtener la ubicacion actual del usuario
+-Usar librerias para que se vea bonito
+-Que sea responsive
+-Configurable para usar en otras ciudades o regiones
+-Soporte multilenguaje
+-Testin automatico
