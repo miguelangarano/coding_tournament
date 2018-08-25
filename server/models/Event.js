@@ -7,10 +7,10 @@ const EventSchema=new Schema({
         type:String,
         required:true
     },
-    /*eventType:{
+    eventType:{
         type:String,
         required:true
-    },*/
+    },
     eventDate:{
         type:String,
         required:true
@@ -23,10 +23,10 @@ const EventSchema=new Schema({
         type:String,
         required:true
     },
-    /*eventImage:{
+    eventImage:{
         type:String,
         required:true
-    }*/
+    }
 });
 
 module.exports=Item=mongoose.model('event',EventSchema);

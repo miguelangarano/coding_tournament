@@ -32,11 +32,11 @@ class ReportForm extends Component{
     onCreateEvent(){
         axios.post('http://localhost:5000/api/events',{
             eventDescription:this.state.eventDescription,
-            //eventType:this.state.eventType,
+            eventType:this.state.eventType,
             eventDate:this.state.eventDate,
             eventLocationLatitude:this.props.lat,
             eventLocationLongitude:this.props.long,
-            //eventImage:this.state.eventImage
+            eventImage:this.state.eventImage
         }).then(function (response) {
             console.log(response);
           })
@@ -71,7 +71,9 @@ class ReportForm extends Component{
             case 'imagen':{
                 this.setState({
                     eventImage:event.target.value
+                    
                 })    
+                console.log(event.target.value);
                 break;
             }
         }

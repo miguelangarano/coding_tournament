@@ -71,7 +71,7 @@ export class MapContainer extends Component {
             <Marker
                 position={{ lat: marker.eventLocationLatitude, lng: marker.eventLocationLongitude }}
                 key={marker._id}
-                name={marker.eventDescription}
+                name={marker.eventDescription+"\n"+marker.eventType+"\n"+marker.eventDate}
                 onClick={this.onMarkerClick}/>
         ))}
 
