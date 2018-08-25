@@ -22,4 +22,4 @@ Extras
 -Que sea responsive
 -Configurable para usar en otras ciudades o regiones
 -Soporte multilenguaje
--Testin automatico
+-Testing automatico

@@ -1,0 +1,27 @@
+La carpeta server es donde se encuentra el backend
+-Dependencias instaladas express  body-parser mongoose concurrently
+-Para el desarrollo instalar -D nodemon
+-En la carpeta config se encuentra las keys del proyecto y en keys.js se puede cambiar el URI de la base de datos
+-En models se encuentran los modelos de los objetos.
+-En routes/api se encuentras las acciones que se pueden hacer con los modelos.
+-En el archivo server.js se detalla la conexion con la base de datos, se manejan las keys de los servicios y se 
+ redireccionan los pedidos al servidor, dependiendo de los modelos con los que quiere interactuar el cliente.
+
+La carpeta client es donde se encuentra el frontend
+-Dependencias instaladas axios bootstrap google-maps-react react-router react-transition-group reactstrap
+-Home esta descompuesto en componentes pero es desde aqui a donde todo llega.
+-En la carpeta components se encuentran todos los componentes
+-En home se cargan los markers para el mapa.
+-En ReportForm.js se envia a la base de datos el evento
+
+
+
+-Para iniciar el backend y frontend ir a la carpeta server y escribir en consola npm run dev
+-La base de datos esta alojada en mLab y el URI se encuentras en  /server/config/keys.js 
+
+
+
+
+
+
+

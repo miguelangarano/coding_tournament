@@ -25,9 +25,11 @@ router.get('/',(req,res)=>{
 router.post('/',(req,res)=>{
     const newEvent=new Event({
         eventDescription: req.body.eventDescription,
+        eventType:req.body.eventType,
         eventDate: req.body.eventDate,
         eventLocationLatitude:req.body.eventLocationLatitude,
-        eventLocationLongitude:req.body.eventLocationLongitude
+        eventLocationLongitude:req.body.eventLocationLongitude,
+        eventImage:req.body.eventImage
     });
     newEvent.save().then(event=>res.json('Creado exitosamente:   '+event));
 });

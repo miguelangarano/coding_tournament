@@ -53,7 +53,7 @@ class ReportForm extends Component{
                 this.setState({
                     eventDescription:event.target.value
                 })
-                console.log(this.state.eventDescription);
+                
                 break;
             }
             case 'type':{
@@ -73,7 +73,7 @@ class ReportForm extends Component{
                     eventImage:event.target.value
                     
                 })    
-                console.log(event.target.value);
+                
                 break;
             }
         }
@@ -91,7 +91,7 @@ class ReportForm extends Component{
                 </FormGroup>
                 <FormGroup>
                 <Label for="type">Seleccione el tipo de delito</Label>
-                <Input type="select" name="type" id="type" onChange={ this.handle.bind(this) }>
+                <Input type="select" name="type" id="type" onChange={ this.handle.bind(this) } >
                     <option>Robo</option>
                     <option>Asesinato</option>
                     <option>Borrachera</option>
