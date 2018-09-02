@@ -11,6 +11,7 @@ import {
 } from 'reactstrap';
 import ReportModal from '../components/ReportModal';
 
+
 class AppNavbar extends Component {
 
   constructor(props) {

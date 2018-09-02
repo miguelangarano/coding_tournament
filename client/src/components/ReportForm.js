@@ -15,7 +15,9 @@ class ReportForm extends Component{
             eventDate:'',
             eventLocationLatitude:'',
             eventLocationLongitude:'',
-            eventImage:''
+            eventImage:'',
+            description: '123',
+            selectedFile: '',
         }
 
         this.handle=this.handle.bind(this);
@@ -30,7 +32,21 @@ class ReportForm extends Component{
 
 
     onCreateEvent(){
-        axios.post('http://localhost:5000/api/events',{
+        axios.post('http://192.168.100.60:5000/api/upload',this.state.dataImage)
+        .then((res)=>{
+            this.setState({
+                eventImage:this.dividirCadena(res.data.path,'\\')
+            });
+            console.log(this.state.eventImage);
+            this.createEvent();
+        })
+        .catch(er=>{
+            console.log('fallo: '+er);
+        });
+    }
+
+    createEvent(){
+        axios.post('http://192.168.100.60:5000/api/events',{
             eventDescription:this.state.eventDescription,
             eventType:this.state.eventType,
             eventDate:this.state.eventDate,
@@ -43,7 +59,24 @@ class ReportForm extends Component{
           .catch(function (error) {
             console.log(error);
           });
-          
+    }
+
+    dividirCadena(cadenaADividir,separador) {
+        var arrayDeCadenas = cadenaADividir.split(separador);
+        return arrayDeCadenas[arrayDeCadenas.length-1];
+     }
+
+    uploadFile(event) {
+        let file = event.target.files[0];
+                
+        if (file) {
+            let data = new FormData();
+            data.append('imagen', file);
+                
+            this.setState({
+                dataImage:data
+            });
+        } 
     }
 
 
@@ -69,11 +102,12 @@ class ReportForm extends Component{
                 break;
             }
             case 'imagen':{
-                this.setState({
-                    eventImage:event.target.value
-                    
-                })    
                 
+                  this.uploadFile(event);
+                
+                break;
+            }
+            default:{
                 break;
             }
         }

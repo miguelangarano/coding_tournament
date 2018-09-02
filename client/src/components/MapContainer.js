@@ -1,33 +1,44 @@
 import React,{Component} from 'react';
 import {Map, InfoWindow, Marker, GoogleApiWrapper} from 'google-maps-react';
-import {Button} from 'reactstrap';
+import svg from '../images/alarm.svg';
+import axios from 'axios';
+import EventCard from './EventCard';
 
 
 export class MapContainer extends Component {
 
+  
+
     constructor(){
         super();
+        
         
         this.onMapClicked=this.onMapClicked.bind(this);
         this.onMarkerClick=this.onMarkerClick.bind(this);
     }
 
-    componentDidMount(){
+    componentWillMount(){
+      axios.get('http://192.168.100.60:5000/api/events')
+            .then(function(response){
+              this.setState({
+                markers:response.data,
+                activeMarker: {
+                  eventDescription:'',
+                  eventDate:'',
+                  eventType:'',
+                  eventImage:''
+                }
+              });
+            }.bind(this)).catch(function (error) {
+                // handle error
+                console.log(error);
+            });
         this.setState({
-            markers:this.props.markers
-        })
-    }
-
-    state={
-        selectedPlace:{
-            name:'hola'
-        },
-        latitude:'-0.1865938',
-        longitude:'-78.570625',
-        markers:[
+            latitude:'-0.16333935565987812',
+            longitude: '-78.48368872126844',
+            name:'',
             
-        ]
-        
+        })
     }
 
     onMapClicked(mapProps, map, clickEvent){
@@ -35,56 +46,83 @@ export class MapContainer extends Component {
         if (this.state.showingInfoWindow) {
             this.setState({
               showingInfoWindow: false,
-              activeMarker: null
+              activeMarker: {
+                eventDescription:'',
+                eventDate:'',
+                eventType:'',
+                eventImage:''
+              },
             })
         }
+        this.setState({
+          latitude:clickEvent.latLng.lat(),
+          longitude:clickEvent.latLng.lng(),
+        })
     }
 
     onMarkerClick(props,marker,e){
         this.setState({
             selectedPlace: props,
+            name:props.name,
             activeMarker: marker,
             showingInfoWindow: true
           });
     }
-    
-
-    
+   
   render() {
 
+    let mark, info;
 
-    return (
-      <Map google={this.props.google}
-      zoom={11}
-      initialCenter={{
-        lat: this.state.latitude,
-        lng: this.state.longitude,
-      }}
-      center={{
-        lat: this.state.latitude,
-        lng: this.state.longitude,
-      }}
-      onClick={this.onMapClicked}>
-      
-      
-      {this.props.markers.map(marker => (
-            <Marker
-                position={{ lat: marker.eventLocationLatitude, lng: marker.eventLocationLongitude }}
-                key={marker._id}
-                name={marker.eventDescription+"\n"+marker.eventType+"\n"+marker.eventDate}
-                onClick={this.onMarkerClick}/>
-        ))}
+    if(typeof(this.state.markers)!=='undefined' && this.state.markers!=null){
+      mark=this.state.markers.map(marker => (
+        <Marker
+            position={{ lat: marker.eventLocationLatitude, lng: marker.eventLocationLongitude }}
+            key={marker._id}
+            onClick={this.onMarkerClick}
+            icon={{
+              url: svg}}
+              
+              eventImage={marker.eventImage}
+              eventType={marker.eventType}
+              eventDate={marker.eventDate}
+              eventDescription={marker.eventDescription}/>
 
+    ));
 
-        <InfoWindow
+      info=<InfoWindow
           marker={this.state.activeMarker}
           visible={this.state.showingInfoWindow}>
-            <div>
-              <h1>{this.state.selectedPlace.name}</h1>
-            </div>
-        </InfoWindow>
-      </Map>
-    );
+            <EventCard activeMarker={this.state.activeMarker}></EventCard>
+        </InfoWindow>;
+    
+    }else{
+      mark=null;
+      info=null;
+    }
+
+      return (
+        <Map google={this.props.google}
+        zoom={11}
+        initialCenter={{
+          lat: this.state.latitude,
+          lng: this.state.longitude
+        }}
+        center={{
+          lat: this.state.evtlat,
+          lng: this.state.evtlong
+        }}
+
+        onClick={this.onMapClicked}>
+
+
+        {mark}
+
+        {info}
+          
+        </Map>
+        
+      );
+    
   }
 }
 
