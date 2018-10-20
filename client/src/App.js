@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import Home from './pages/Home';
-import SideMenu from './components/SideMenu';
 import{
   Switch,
   Route,
@@ -13,7 +12,6 @@ class App extends Component {
       <Router>
         <Switch>
           <Route exact path='/' component={Home}/>  
-          <Route path='/side' component={SideMenu}/>
         </Switch>
       </Router>
     );
